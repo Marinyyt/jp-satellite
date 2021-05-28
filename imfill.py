@@ -8,7 +8,7 @@ import argparse
 #mask, marker, result = imageio.imread('mask.png'),imageio.imread('marker.png'), imageio.imread('result.png')
 #image = 255 - mask[1:-1, 1:-1]
 
-def denoiser(input_path, output_path, debug):
+def denoiser(input_path, output_path):
     mask = imageio.imread('./img_07170.png').astype(np.float32)
     gray_mask = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
     holefillMask = cv2.imread('./result-mask.png', -1)
@@ -47,6 +47,8 @@ if __name__ == "__main__":
     parser.add_argument("--input_path", type = str, default = './', help = 'path to the input noisy frames.')
     parser.add_argument("--output_path", type =  str, default= ' ./', help = 'path to save the denoised frames.')
     argparse = parser.parse_args()
+    if not os.path.exists(argparse.output_path):
+        os.mkdir(argparse.output_path)
     denoiser(argparse.input_path, argparse.output_path)
 
 
